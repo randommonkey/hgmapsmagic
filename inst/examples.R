@@ -42,3 +42,7 @@ vartwteuywgdbskjbskdcbskdjf = c(12743845843.7989,3345)
                                      geoNameVar = "name", export = TRUE, col_bone = 'orange', col_btwo = 'red')
 
 
+ data <- data.frame(code = c('05', '81'))
+ data$value <- runif(2)
+
+ hgch_map_choro_colombia_GcdNum(data)

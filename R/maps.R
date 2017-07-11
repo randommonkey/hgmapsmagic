@@ -318,3 +318,53 @@ hgch_map_bubbles_latinAmerican_GcdNumNum <- function(data,
   hc
 
 }
+
+
+
+#' Choropleth's world map
+#' @name hgch_colombia_choro_world_GcdNum
+#' @param x A data.frame
+#' @return highcharts viz
+#' @section ftype: Gcd-Num
+#' @examples
+#' hgch_colombia_choro_world_GcdNum(sampleData("Gcd-Num",nrow = 10))
+#' @export hgch_colombia_choro_world_GcdNum
+hgch_map_choro_colombia_GcdNum <- function(data, title = NULL,
+                                           subtitle = NULL,
+                                           xAxisTitle = NULL,
+                                           yAxisTitle = NULL,
+                                           minColor = "#E63917",
+                                           maxColor= "#18941E",
+                                           aggregate = "count", theme = NULL,
+                                           export = FALSE, ...){
+
+  f <- fringe(data)
+  nms <- getClabels(f)
+
+  xAxisTitle <- xAxisTitle %||% nms[1]
+  yAxisTitle <- yAxisTitle %||% nms[2]
+  title <-  title %||% ""
+  d <- f$d %>% na.omit()
+
+
+
+  mapC <- read_csv('inst/aux/dane-codes-departamento.csv')
+  mapC <- mapC %>% select(code = `Hc-a2`, a = id, name)
+  mapC$a <- as.character(mapC$a)
+  mapC$a[mapC$a == '5'] <- '05'
+  mapC$a[mapC$a == '8'] <- '08'
+  df <- left_join(d, mapC)
+
+
+
+
+
+  h <- hcmap("countries/co/co-all", data = df, value = "b",
+             joinBy = c("hc-a2", "code"), name = "av",
+             dataLabels = list(enabled = TRUE, format = '{point.name}'),
+             borderColor = "black", borderWidth = 0.1,
+             tooltip = list(valueDecimals = 0, valuePrefix = "", valueSuffix = " Muertos"))
+
+  h
+}
+
