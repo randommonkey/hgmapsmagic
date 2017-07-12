@@ -46,3 +46,7 @@ vartwteuywgdbskjbskdcbskdjf = c(12743845843.7989,3345)
  data$value <- runif(2)
 
  hgch_map_choro_colombia_GcdNum(data)
+
+ data <- data.frame(code = c('05', '81'), bjhbk =c(1,24))
+
+hgch_map_bubbles_colombia_GcdNum(data)

@@ -7,8 +7,7 @@
 \usage{
 hgch_map_choro_colombia_GcdNum(data, title = NULL, subtitle = NULL,
   xAxisTitle = NULL, yAxisTitle = NULL, minColor = "#E63917",
-  maxColor = "#18941E", aggregate = "count", theme = NULL,
-  export = FALSE, ...)
+  maxColor = "#18941E", theme = NULL, export = FALSE, ...)
 }
 \arguments{
 \item{x}{A data.frame}

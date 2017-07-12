@@ -335,7 +335,7 @@ hgch_map_choro_colombia_GcdNum <- function(data, title = NULL,
                                            yAxisTitle = NULL,
                                            minColor = "#E63917",
                                            maxColor= "#18941E",
-                                           aggregate = "count", theme = NULL,
+                                           theme = NULL,
                                            export = FALSE, ...){
 
   f <- fringe(data)
@@ -360,11 +360,52 @@ hgch_map_choro_colombia_GcdNum <- function(data, title = NULL,
 
 
   h <- hcmap("countries/co/co-all", data = df, value = "b",
-             joinBy = c("hc-a2", "code"), name = "av",
+             joinBy = c("hc-a2", "code"), name = names(df)[2],
              dataLabels = list(enabled = TRUE, format = '{point.name}'),
-             borderColor = "black", borderWidth = 0.1,
-             tooltip = list(valueDecimals = 0, valuePrefix = "", valueSuffix = " Muertos"))
+             borderColor = "black", borderWidth = 0.1) %>%
+       hc_mapNavigation(enabled = TRUE)
 
+  if(export) h <- h %>% hc_exporting(enabled = TRUE)
   h
 }
 
+#' bubbles's colombia map
+#' @name hgch_colombia_bubbles_world_GcdNum
+#' @param x A data.frame
+#' @return highcharts viz
+#' @section ftype: Gcd-Num
+#' @examples
+#' hgch_colombia_bubbles_world_GcdNum(sampleData("Gcd-Num",nrow = 10))
+#' @export hgch_colombia_bubbles_world_GcdNum
+hgch_map_bubbles_colombia_GcdNum <- function(data, title = NULL,
+                                             subtitle = NULL,
+                                             xAxisTitle = NULL,
+                                             yAxisTitle = NULL,
+                                             theme = NULL,
+                                             export = FALSE, ...){
+
+  f <- fringe(data)
+  nms <- getClabels(f)
+
+  xAxisTitle <- xAxisTitle %||% nms[1]
+  yAxisTitle <- yAxisTitle %||% nms[2]
+  title <-  title %||% ""
+  d <- f$d %>% na.omit()
+
+
+
+  mapC <- read_csv('inst/aux/dane-codes-departamento.csv')
+  mapC <- mapC %>% select(code = `Hc-a2`, a = id, lat = latitude, lon = longitude, everything())
+  mapC$a <- as.character(mapC$a)
+  mapC$a[mapC$a == '5'] <- '05'
+  mapC$a[mapC$a == '8'] <- '08'
+  df <- left_join(d, mapC)
+  df <- plyr::rename(df, c('b' = 'z'))
+
+  h <- hcmap("countries/co/co-all", showInLegend = FALSE) %>%
+    hc_add_series(data = df, type = "mapbubble", name = names(df)[2], maxSize = '15%') %>%
+    hc_mapNavigation(enabled = TRUE)
+
+  if(export) h <- h %>% hc_exporting(enabled = TRUE)
+  h
+}
