@@ -23,5 +23,5 @@ bubbles's colombia map
 }
 
 \examples{
-hgch_colombia_bubbles_world_GcdNum(sampleData("Gcd-Num",nrow = 10))
+hgch_map_bubbles_colombia_GcdNum(sampleData("Gcd-Num",nrow = 10))
 }

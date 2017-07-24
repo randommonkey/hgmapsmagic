@@ -327,8 +327,8 @@ hgch_map_bubbles_latinAmerican_GcdNumNum <- function(data,
 #' @return highcharts viz
 #' @section ftype: Gcd-Num
 #' @examples
-#' hgch_colombia_choro_world_GcdNum(sampleData("Gcd-Num",nrow = 10))
-#' @export hgch_colombia_choro_world_GcdNum
+#' hgch_map_choro_colombia_GcdNum(sampleData("Gcd-Num",nrow = 10))
+#' @export hgch_map_choro_colombia_GcdNum
 hgch_map_choro_colombia_GcdNum <- function(data, title = NULL,
                                            subtitle = NULL,
                                            xAxisTitle = NULL,
@@ -360,10 +360,14 @@ hgch_map_choro_colombia_GcdNum <- function(data, title = NULL,
 
 
   h <- hcmap("countries/co/co-all", data = df, value = "b",
-             joinBy = c("hc-a2", "code"), name = names(df)[2],
+             joinBy = c("hc-a2", "code"), name = names(data)[2],
              dataLabels = list(enabled = TRUE, format = '{point.name}'),
              borderColor = "black", borderWidth = 0.1) %>%
        hc_mapNavigation(enabled = TRUE)
+
+  h <- h %>%
+       hc_title(text = title) %>%
+       hc_subtitle(text = subtitle) %>%
 
   if(export) h <- h %>% hc_exporting(enabled = TRUE)
   h
@@ -375,8 +379,8 @@ hgch_map_choro_colombia_GcdNum <- function(data, title = NULL,
 #' @return highcharts viz
 #' @section ftype: Gcd-Num
 #' @examples
-#' hgch_colombia_bubbles_world_GcdNum(sampleData("Gcd-Num",nrow = 10))
-#' @export hgch_colombia_bubbles_world_GcdNum
+#' hgch_map_bubbles_colombia_GcdNum(sampleData("Gcd-Num",nrow = 10))
+#' @export hgch_map_bubbles_colombia_GcdNum
 hgch_map_bubbles_colombia_GcdNum <- function(data, title = NULL,
                                              subtitle = NULL,
                                              xAxisTitle = NULL,
@@ -403,7 +407,9 @@ hgch_map_bubbles_colombia_GcdNum <- function(data, title = NULL,
   df <- plyr::rename(df, c('b' = 'z'))
 
   h <- hcmap("countries/co/co-all", showInLegend = FALSE) %>%
-    hc_add_series(data = df, type = "mapbubble", name = names(df)[2], maxSize = '15%') %>%
+    hc_title(text = title) %>%
+    hc_subtitle(text = subtitle) %>%
+    hc_add_series(data = df, type = "mapbubble", name = names(data)[2], maxSize = '15%') %>%
     hc_mapNavigation(enabled = TRUE)
 
   if(export) h <- h %>% hc_exporting(enabled = TRUE)

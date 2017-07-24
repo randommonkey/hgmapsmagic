@@ -23,5 +23,5 @@ Choropleth's world map
 }
 
 \examples{
-hgch_colombia_choro_world_GcdNum(sampleData("Gcd-Num",nrow = 10))
+hgch_map_choro_colombia_GcdNum(sampleData("Gcd-Num",nrow = 10))
 }
